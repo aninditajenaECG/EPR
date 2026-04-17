@@ -1728,11 +1728,12 @@ window.addEventListener('load', ()=>{
 </script>
 
 <script>
-  // 1. Your Supabase credentials
-  const SUPABASE_URL = "https://asithdyugciukdfnowrjn.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_SDlGfgbshnfdOzo4gWw_4BKPnqdH";
+  //const SUPABASE_URL = "https://asithdyugciukdfnowrjn.supabase.co";
+  // const SUPABASE_ANON_KEY = "sb_publishable_SDlGfgbshnfdOzo4gWw_4BKPnqdH";
 
-  // 2. Create client
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
+  
   const supabaseClient = supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
