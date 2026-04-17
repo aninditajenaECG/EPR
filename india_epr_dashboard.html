@@ -1736,7 +1736,6 @@ window.addEventListener('load', ()=>{
     SUPABASE_ANON_KEY
   );
 
-  // 3. Load data function
   async function loadData() {
     const { data, error } = await supabaseClient
       .from("epr_data")   // your table name
@@ -1752,7 +1751,6 @@ window.addEventListener('load', ()=>{
       JSON.stringify(data, null, 2);
   }
 
-  // 4. Run on page load
   loadData();
 
 
@@ -1769,14 +1767,11 @@ async function loadData() {
   console.log("Data loaded:", data);
   console.log("TABLE USED: raw_epr_data");
 
-  // 👉 update your charts here
   updateCharts(data);
 }
 
-// 1. initial load
 loadData();
 
-// 2. AUTO REFRESH (ADD THIS)
 setInterval(() => {
   loadData();
 }, 5000);
