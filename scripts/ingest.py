@@ -1,4 +1,3 @@
-
 import os
 import pandas as pd
 from pathlib import Path
@@ -33,7 +32,7 @@ def process_file(file_path):
 
             df = df.dropna(how="all")
 
-            records = []aninditajena6@gmail.com
+            records = []
 
             for _, row in df.iterrows():
 
