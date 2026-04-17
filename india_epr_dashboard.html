@@ -1736,50 +1736,42 @@ window.addEventListener('load', ()=>{
     SUPABASE_ANON_KEY
   );
 
+  // ✅ Main function
   async function loadData() {
-    const { data, error } = await supabaseClient
-      .from("epr_data")   // your table name
-      .select("*");
+    try {
+      const { data, error } = await supabaseClient
+        .from("raw_epr_data")   // keep ONE table
+        .select("*");
 
-    if (error) {
+      if (error) {
+        console.error("Supabase Error:", error);
+        document.getElementById("data").innerText =
+          "Error: " + error.message;
+        return;
+      }
+
+      console.log("Data loaded:", data);
+
+      // show raw JSON in UI
       document.getElementById("data").innerText =
-        "Error: " + error.message;
-      return;
+        JSON.stringify(data, null, 2);
+
+      // update charts safely
+      if (typeof updateCharts === "function") {
+        updateCharts(data);
+      }
+
+    } catch (err) {
+      console.error("Unexpected Error:", err);
     }
-
-    document.getElementById("data").innerText =
-      JSON.stringify(data, null, 2);
   }
 
+  // ✅ initial load
   loadData();
 
-
-async function loadData() {
-  const { data, error } = await supabaseClient
-    .from("raw_epr_data")
-    .select("*");
-
-  if (error) {
-    console.log(error);
-    return;
-  }
-
-  console.log("Data loaded:", data);
-  console.log("TABLE USED: raw_epr_data");
-
-  updateCharts(data);
-}
-
-loadData();
-
-setInterval(() => {
-  loadData();
-}, 5000);
-
-
-
+  // ✅ auto refresh every 5 seconds
+  setInterval(loadData, 5000);
 </script>
-
 
 </body>
 </html>
